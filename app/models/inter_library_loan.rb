@@ -1,4 +1,6 @@
 class InterLibraryLoan < ActiveRecord::Base
+  attr_accessible :item_id, :from_library_id, :to_library_id, :requested_at, :reason
+
   self.extend ItemsHelper
   default_scope :order => "created_at DESC"
   scope :completed, where(:state => 'return_received')
