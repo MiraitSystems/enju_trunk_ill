@@ -135,7 +135,7 @@ class InterLibraryLoan < ActiveRecord::Base
   def self.get_loan_report(inter_library_loan)
     @loan = inter_library_loan
     begin
-      report = ThinReports::Report.new :layout => "#{Rails.root.to_s}/app/views/inter_library_loans/move_item"
+      report = EnjuTrunkIll.new_report('move_item.tlf')
       report.start_new_page
       report.page.item(:export_date).value(Time.now)
       report.page.item(:title).value(@loan.item.manifestation.original_title)
@@ -160,7 +160,7 @@ class InterLibraryLoan < ActiveRecord::Base
   end
 
   def self.get_loan_lists(loans, library_ids)
-    report = ThinReports::Report.new :layout => "#{Rails.root.to_s}/app/views/inter_library_loans/loan_list"
+    report = EnjuTrunkIll.new_report('loan_list.tlf')
 
     report.events.on :page_create do |e|
       e.page.item(:page).value(e.page.no)
@@ -209,7 +209,7 @@ class InterLibraryLoan < ActiveRecord::Base
   end
 
   def self.get_pickup_item_file(pickup_item, loan)
-    report = ThinReports::Report.new :layout => "#{Rails.root.to_s}/app/views/inter_library_loans/move_item"
+    report = EnjuTrunkIll.new_report('move_item.tlf')
     report.start_new_page
     report.page.item(:export_date).value(Time.now)
     report.page.item(:title).value(pickup_item.manifestation.original_title)
